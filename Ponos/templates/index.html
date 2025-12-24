@@ -1,0 +1,610 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PONOS SRAY AWARDS 2025</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2e582e;
+            --light-green: #3f7a3f;
+            --dark-green: #1e3a1e;
+            --primary-brown: #8b4513;
+            --light-brown: #a0522d;
+            --dark-brown: #654321;
+            --text-light: #f5f5f5;
+            --text-dark: #333333;
+            --background-light: #f9f9f9;
+        }
+        
+        /* Настройка основных стилей */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            position: relative;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* Главный контейнер */
+        .container-custom {
+            max-width: 1200px;
+        }
+        
+        /* Шапка сайта */
+        .header {
+            background: linear-gradient(90deg, var(--dark-green) 0%, var(--primary-green) 100%);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+        }
+        
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            margin: 0 5px;
+        }
+        
+        .nav-link:hover {
+            border-bottom: 2px solid var(--light-brown);
+        }
+        
+        /* Секция героя */
+        .hero-section {
+            background: url('https://via.placeholder.com/1920x600/2e582e/ffffff?text=PONOS+SRAY+AWARDS+2025') no-repeat center center;
+            background-size: cover;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .hero-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 58, 30, 0.7);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        /* Номинации с слайдером */
+        .nominations-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        
+        .nomination-slider-container {
+            position: relative;
+            padding: 0 50px;
+            overflow: hidden;
+        }
+        
+        .nomination-slider {
+            overflow: hidden;
+        }
+        
+        .nomination-slider-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 30px;
+        }
+        
+        .nomination-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            width: 350px;
+            height: 500px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nomination-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .nomination-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .nomination-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .nomination-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .nomination-description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+        
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-brown);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .slider-btn:hover {
+            background-color: var(--dark-brown);
+        }
+        
+        .slider-btn.prev {
+            left: 0;
+        }
+        
+        .slider-btn.next {
+            right: 0;
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--primary-brown);
+        }
+        
+        /* Правила голосования */
+        .rules-section {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+        
+        .rules-section .section-title {
+            color: var(--text-light);
+        }
+        
+        .rule-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .rule-icon {
+            font-size: 1.5rem;
+            color: var(--light-brown);
+            margin-right: 15px;
+            margin-top: 3px;
+        }
+        
+        /* Подвал */
+        .footer {
+            background-color: var(--dark-green);
+            color: var(--text-light);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Кнопки */
+        .btn-primary-custom {
+            background-color: var(--primary-brown);
+            border-color: var(--primary-brown);
+            color: white;
+            padding: 10px 25px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--dark-brown);
+            border-color: var(--dark-brown);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary-custom {
+            background-color: transparent;
+            border: 2px solid var(--light-brown);
+            color: var(--light-brown);
+            padding: 10px 25px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary-custom:hover {
+            background-color: var(--light-brown);
+            color: white;
+        }
+        
+        .countdown-section {
+            background-color: var(--light-brown);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .countdown-item {
+            display: inline-block;
+            margin: 0 15px;
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .header-mobile__popup__video--right {
+            right: -6rem;
+            left: unset;
+            top: unset;
+            bottom: 0;
+            width: 15rem;
+            height: 20rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container container-custom">
+            <div class="logo-container">
+                <img src="{% static 'videos/logo.png' %}" alt="PONOS SRAY AWARDS 2025" class="logo">
+            </div>
+            <nav>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#nominations">Номинации</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rules">Правила</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Секция героя -->
+    <section class="hero-section">
+        <div class="container container-custom">
+            <div class="hero-content">
+                <h1 class="hero-title">PONOS SRAY AWARDS 2025</h1>
+                <p class="hero-subtitle">Добро пожаловать на великие выборы номинации SRAY от ПОНОСА, здесь мы выберем самых главных фриков, отбросов общества и аутистов со всей предложки ПОНОСА. Вас ждёт серия выборов в различных номинациях года. Наша задача выявить лучших из худших. Присоединяйтесь к выборам SRAY!</p>
+                <a href="#nominations" class="btn btn-light btn-lg">Номинации</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Таймер до окончания голосования -->
+    <section class="countdown-section">
+        <div class="container container-custom">
+            <h3>До окончания голосования осталось:</h3>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number">Z</span>
+                    <span class="countdown-label">дней</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number">O</span>
+                    <span class="countdown-label">часов</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number">V</span>
+                    <span class="countdown-label">минут</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция номинаций -->
+    <section id="nominations" class="nominations-section">
+        <div class="container container-custom">
+            <h2 class="section-title">Номинации для голосования</h2>
+            <div class="nomination-slider-container">
+                <button class="slider-btn prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="nomination-slider">
+                    <div class="nomination-slider-track">
+                        {% for nomination in nominations %}
+                        <div class="nomination-card">
+                            <img src="{% if nomination.image %}{{ nomination.image.url }}{% else %}https://via.placeholder.com/350x200/{% cycle '8b4513' 'a0522d' '654321' '2e582e' '3f7a3f' '1e3a1e' %}/ffffff?text={{ nomination.title|urlencode }}{% endif %}" 
+                                 alt="{{ nomination.title }}" class="nomination-image">
+                            <div class="nomination-content">
+                                <h3 class="nomination-title">{{ nomination.title }}</h3>
+                                <p class="nomination-description">{{ nomination.description }}</p>
+                                <a href="{% url 'voting' nomination.id %}" class="btn btn-primary-custom">
+                                    {% if nomination.is_active %}
+                                        Голосовать
+                                    {% else %}
+                                        Результаты
+                                    {% endif %}
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button class="slider-btn next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="slider-dots">
+            </div>
+        </div>
+    </section>
+
+    <!-- Правила голосования -->
+    <section id="rules" class="rules-section">
+        <div class="container container-custom">
+            <h2 class="section-title">Правила голосования</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="rule-item">
+                        <div class="rule-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Один голос на человека</h4>
+                            <p>Каждый пользователь может проголосовать только один раз в каждой номинации.</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div>
+                            <h4>Голосование без регистрации</h4>
+                            <p>Для участия в голосовании регистрация не требуется.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="rule-item">
+                        <div class="rule-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Сроки голосования</h4>
+                            <p>Голосование будет открыто до Z декабря 2025 года.</p>
+                        </div>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <h4>Запрещена накрутка</h4>
+                            <p>Любые попытки накрутки голосов будут отслеживаться и МЫ ТЕБЯ СУКА ПО IP ВЫЧИСЛИМ БЛЯДОТА ЕБАНАЯ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="#nominations" class="btn btn-secondary-custom">Приступить к голосованию</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container container-custom">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>PONOS SRAY AWARDS 2025</h4>
+                    <p>Ежегодная премия для признания лучших из худших!</p>
+                    <p>Контактный Telegram: @Tyriopj</p>
+                    <p>Контактный e-mail: <a href="mailto:srayawardofficial@mail.ru">srayawardofficial@mail.ru</a></p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="footer-links mb-3">
+                        <a href="https://t.me/+gsPeD9w-THFmMzEx"><i class="fab fa-telegram"></i></a>
+                    </div>
+                    <p>&copy; 2025 PONOS SRAY AWARDS. Все права защищены админами Поноса (сыновьями лучших женщин)</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Скрипт для слайдера -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderTrack = document.querySelector('.nomination-slider-track');
+            const slides = document.querySelectorAll('.nomination-card');
+            const prevBtn = document.querySelector('.slider-btn.prev');
+            const nextBtn = document.querySelector('.slider-btn.next');
+            const dotsContainer = document.querySelector('.slider-dots');
+            
+            let currentIndex = 0;
+            const slidesToShow = 3;
+            const totalSlides = slides.length;
+            
+            // Создаем точки для навигации
+            function createDots() {
+                dotsContainer.innerHTML = '';
+                const totalPages = Math.ceil(totalSlides / slidesToShow);
+                
+                for (let i = 0; i < totalPages; i++) {
+                    const dot = document.createElement('span');
+                    dot.classList.add('slider-dot');
+                    if (i === 0) dot.classList.add('active');
+                    dot.setAttribute('data-index', i);
+                    dot.addEventListener('click', function() {
+                        currentIndex = i * slidesToShow;
+                        updateSliderPosition();
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            }
+            
+            // Функция обновления позиции слайдера
+            function updateSliderPosition() {
+                const slideWidth = slides[0].offsetWidth + 30; // Ширина карточки + gap
+                const maxIndex = Math.max(0, totalSlides - slidesToShow);
+                
+                // Проверяем границы
+                if (currentIndex > maxIndex) {
+                    currentIndex = maxIndex;
+                } else if (currentIndex < 0) {
+                    currentIndex = 0;
+                }
+                
+                sliderTrack.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+                
+                // Обновляем активную точку
+                const currentPage = Math.floor(currentIndex / slidesToShow);
+                const dots = document.querySelectorAll('.slider-dot');
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentPage);
+                });
+            }
+            
+            // Обработчики для кнопок
+            nextBtn.addEventListener('click', function() {
+                if (currentIndex < totalSlides - slidesToShow) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0; // Возвращаемся к началу
+                }
+                updateSliderPosition();
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = totalSlides - slidesToShow; // Переходим к концу
+                }
+                updateSliderPosition();
+            });
+            
+            // Адаптация к изменению размера окна
+            window.addEventListener('resize', function() {
+                updateSliderPosition();
+            });
+            
+            // Инициализация
+            createDots();
+            updateSliderPosition();
+        });
+    </script>
+</body>
+</html>

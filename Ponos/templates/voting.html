@@ -1,0 +1,744 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ nomination.title }} - PONOS SRAY AWARDS 2025</title>
+    <!-- Подключаем те же стили что и в index.html -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2e582e;
+            --light-green: #3f7a3f;
+            --dark-green: #1e3a1e;
+            --primary-brown: #8b4513;
+            --light-brown: #a0522d;
+            --dark-brown: #654321;
+            --text-light: #f5f5f5;
+            --text-dark: #333333;
+            --background-light: #f9f9f9;
+        }
+        
+        /* Настройка основных стилей */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            position: relative;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* Главный контейнер */
+        .container-custom {
+            max-width: 1200px;
+        }
+        
+        /* Шапка сайта */
+        .header {
+            background: linear-gradient(90deg, var(--dark-green) 0%, var(--primary-green) 100%);
+            color: var(--text-light);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+        }
+        
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            margin: 0 5px;
+        }
+        
+        .nav-link:hover {
+            border-bottom: 2px solid var(--light-brown);
+        }
+        
+        /* Секция героя */
+        .hero-section {
+            background: url('https://via.placeholder.com/1920x600/2e582e/ffffff?text=PONOS+SRAY+AWARDS+2025') no-repeat center center;
+            background-size: cover;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .hero-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 58, 30, 0.7);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        /* Номинации с слайдером */
+        .nominations-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        
+        .nomination-slider-container {
+            position: relative;
+            padding: 0 50px;
+            overflow: hidden;
+        }
+        
+        .nomination-slider {
+            overflow: hidden;
+        }
+        
+        .nomination-slider-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 30px;
+        }
+        
+        .nomination-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            width: 350px;
+            height: 500px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nomination-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .nomination-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .nomination-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .nomination-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .nomination-description {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+        
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-brown);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .slider-btn:hover {
+            background-color: var(--dark-brown);
+        }
+        
+        .slider-btn.prev {
+            left: 0;
+        }
+        
+        .slider-btn.next {
+            right: 0;
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--primary-brown);
+        }
+        
+        /* Правила голосования */
+        .rules-section {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+        
+        .rules-section .section-title {
+            color: var(--text-light);
+        }
+        
+        .rule-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .rule-icon {
+            font-size: 1.5rem;
+            color: var(--light-brown);
+            margin-right: 15px;
+            margin-top: 3px;
+        }
+        
+        /* Подвал */
+        .footer {
+            background-color: var(--dark-green);
+            color: var(--text-light);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Кнопки */
+        .btn-primary-custom {
+            background-color: var(--primary-brown);
+            border-color: var(--primary-brown);
+            color: white;
+            padding: 10px 25px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover {
+            background-color: var(--dark-brown);
+            border-color: var(--dark-brown);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary-custom {
+            background-color: transparent;
+            border: 2px solid var(--light-brown);
+            color: var(--light-brown);
+            padding: 10px 25px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary-custom:hover {
+            background-color: var(--light-brown);
+            color: white;
+        }
+        
+        .countdown-section {
+            background-color: var(--light-brown);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .countdown-item {
+            display: inline-block;
+            margin: 0 15px;
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .header-mobile__popup__video--right {
+            right: -6rem;
+            left: unset;
+            top: unset;
+            bottom: 0;
+            width: 15rem;
+            height: 20rem;
+        }
+        .candidate-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .candidate-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .candidate-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .candidate-content {
+            padding: 20px;
+        }
+        
+        .candidate-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+        }
+        
+        .candidate-bio {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .vote-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .progress {
+            height: 20px;
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary-brown);
+        }
+        
+        .alert-custom {
+            background-color: var(--light-green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb-section {
+            background-color: var(--light-green);
+            padding: 15px 0;
+            color: white;
+        }
+        
+        .breadcrumb {
+            background: transparent;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--light-brown);
+        }
+        .candidate-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            height: auto; /* Автоматическая высота */
+            min-height: 550px; /* Минимальная высота */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .candidate-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+            flex-shrink: 0;
+        }
+
+        .candidate-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .candidate-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-green);
+            word-wrap: break-word; /* Перенос длинных слов */
+            word-break: break-word; /* Перенос длинных слов */
+        }
+
+        .candidate-bio {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5; /* Увеличим межстрочный интервал */
+            word-wrap: break-word; /* Перенос длинных слов */
+            word-break: break-word; /* Перенос длинных слов */
+            overflow-wrap: break-word; /* Современный стандарт */
+            white-space: normal; /* Обеспечиваем перенос строк */
+        }
+
+        .vote-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #777;
+            flex-shrink: 0;
+        }
+
+        .progress {
+            height: 20px;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        .progress-bar {
+            background-color: var(--primary-brown);
+        }
+
+        /* Стили для кнопки голосования */
+        .candidate-content form {
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-brown);
+            border-color: var(--primary-brown);
+            color: white;
+            padding: 10px 25px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            width: 100%;
+            flex-shrink: 0;
+            white-space: nowrap; /* Текст кнопки не переносится */
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--dark-brown);
+            border-color: var(--dark-brown);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Убедимся, что контейнер ограничивает ширину */
+        .container-custom {
+            max-width: 1200px;
+        }
+
+        /* Для колонок кандидатов */
+        .col-lg-6 {
+            word-wrap: break-word;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .candidate-card {
+                min-height: 500px;
+            }
+            
+            .candidate-name {
+                font-size: 1.2rem;
+            }
+            
+            .candidate-bio {
+                font-size: 0.9rem;
+            }
+            
+            .vote-stats {
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container container-custom">
+            <div class="logo-container">
+                <img src="{% static 'videos/logo.png' %}" alt="PONOS SRAY AWARDS 2025" class="logo">
+            </div>
+            <nav>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}#nominations">Номинации</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}#rules">Правила</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Хлебные крошки -->
+    <section class="breadcrumb-section">
+        <div class="container container-custom">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item active">{{ nomination.title }}</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <section class="nomination-detail-section">
+        <div class="container container-custom">
+            <!-- Заголовок номинации -->
+            <div class="nomination-header text-center mb-5">
+                <h1 class="nomination-title" style="color: var(--primary-green);">{{ nomination.title }}</h1>
+                <p class="nomination-description lead">{{ nomination.description }}</p>
+                
+                {% if nomination.voting_end_date %}
+                <div class="alert alert-info">
+                    <i class="fas fa-clock me-2"></i>
+                    Голосование открыто до: {{ nomination.voting_end_date|date:"d.m.Y H:i" }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Сообщения -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-custom alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Если пользователь уже голосовал -->
+            {% if user_voted %}
+                <div class="alert alert-custom text-center">
+                    <h4><i class="fas fa-check-circle me-2"></i>Вы уже проголосовали в этой номинации!</h4>
+                    <p>Вы выбрали: <strong>{{ user_vote.candidate.name }}</strong></p>
+                    <a href="{% url 'index' %}" class="btn btn-secondary-custom mt-3">Вернуться к номинациям</a>
+                </div>
+            {% endif %}
+
+            <!-- Если голосование закрыто -->
+            {% if not is_voting_active %}
+                <div class="alert alert-custom text-center">
+                    <h4><i class="fas fa-lock me-2"></i>Голосование завершено</h4>
+                    <p>Голосование в этой номинации закрыто.</p>
+                </div>
+            {% endif %}
+
+            <!-- Кандидаты -->
+            <div class="row">
+                {% for candidate in candidates %}
+                <div class="col-lg-6 mb-4">
+                    <div class="candidate-card">
+                        <img src="{% if candidate.photo %}{{ candidate.photo.url }}{% else %}https://via.placeholder.com/400x250/8b4513/ffffff?text={{ candidate.name|urlencode }}{% endif %}" 
+                             alt="{{ candidate.name }}" class="candidate-image">
+                        <div class="candidate-content">
+                            <h3 class="candidate-name">{{ candidate.name }}</h3>
+                            <p class="candidate-bio">{{ candidate.description }}</p>
+                            
+                            {% if is_voting_active and not user_voted %}
+                            <form method="post" action="{% url 'vote' nomination.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="candidate_id" value="{{ candidate.id }}">
+                                <button type="submit" class="btn btn-primary-custom">
+                                    <i class="fas fa-vote-yea me-2"></i>Голосовать
+                                </button>
+                            </form>
+                            {% endif %}
+                            
+                            <div class="vote-stats">
+                                <span><i class="fas fa-chart-bar me-1"></i>Голосов: {{ candidate.vote_count }}</span>
+                                <span><i class="fas fa-percentage me-1"></i>{{ candidate.vote_percentage }}%</span>
+                            </div>
+                            
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ candidate.vote_percentage }}%;">
+                                    {{ candidate.vote_percentage }}%
+                                </div>
+                            </div>
+                            
+                            {% if user_voted and user_vote.candidate.id == candidate.id %}
+                            <div class="mt-2 text-success">
+                                <i class="fas fa-check-circle me-1"></i>Ваш выбор
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning">
+                        <h4>Кандидаты пока не добавлены</h4>
+                        <p>В этой номинации еще нет кандидатов для голосования.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Кнопка возврата -->
+            <div class="text-center mt-5">
+                <a href="{% url 'index' %}" class="btn btn-secondary-custom btn-lg">
+                    <i class="fas fa-arrow-left me-2"></i>Вернуться к номинациям
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container container-custom">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>PONOS SRAY AWARDS 2025</h4>
+                    <p>Ежегодная премия для признания лучших из худших!</p>
+                    <p>Контактный Telegram: @Tyriopj</p>
+                    <p>Контактный e-mail: <a href="mailto:srayawardofficial@mail.ru">srayawardofficial@mail.ru</a></p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="footer-links mb-3">
+                        <a href="https://t.me/+gsPeD9w-THFmMzEx"><i class="fab fa-telegram"></i></a>
+                    </div>
+                    <p>&copy; 2025 PONOS SRAY AWARDS. Все права защищены админами Поноса (сыновьями лучших женщин)</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Подтверждение голосования
+        document.addEventListener('DOMContentLoaded', function() {
+            const voteButtons = document.querySelectorAll('button[type="submit"]');
+            
+            voteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (!confirm('Вы уверены, что хотите проголосовать за этого кандидата? Изменить голос будет нельзя.')) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
