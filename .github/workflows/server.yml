@@ -28,4 +28,4 @@ jobs:
     - name: Run Tests
       run: |
         cd Ponos
-        python manage.py runserver
+        python manage.py test
